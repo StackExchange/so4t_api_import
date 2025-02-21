@@ -24,7 +24,7 @@ Creating an access token for Enterprise can sometimes be tricky for people who h
 
 * Go to the page where you created your API key. Take note of the "Client ID" associated with your API key.
 * Go to the following URL, replacing the base URL, the `client_id`, and the base URL of the `redirect_uri` with your own:
-`https://YOUR.SO-ENTERPRISE.URL/oauth/dialog?client_id=111&redirect_uri=https://YOUR.SO-ENTERPRISE.URL/oauth/login_success`
+`https://YOUR.SO-ENTERPRISE.URL/oauth/dialog?client_id=111&scope=write_access&redirect_uri=https://YOUR.SO-ENTERPRISE.URL/oauth/login_success`
 * You may be prompted to log in to Stack Overflow Enterprise if you're not already. Either way, you'll be redirected to a page that simply says "Authorizing Application"
 * In the URL of that page, you'll find your access token. Example: `https://YOUR.SO-ENTERPRISE.URL/oauth/login_success#access_token=YOUR_TOKEN`
 
