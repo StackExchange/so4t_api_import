@@ -20,13 +20,24 @@ An API script for Stack Overflow for Teams that facilitates bulk-importing quest
 
 For the Business tier, you'll need a [personal access token](https://stackoverflowteams.help/en/articles/4385859-stack-overflow-for-teams-api) (PAT). You'll need to obtain an API key and an access token for Enterprise. Documentation for creating an Enterprise key and token can be found within your instance at this url: `https://[your_site]/api/docs/authentication`
 
-Creating an access token for Enterprise can sometimes be tricky for people who haven't done it before. Here are some (hopefully) straightforward instructions:
+**Before proceeding, please note a critical step when creating your API Application in Stack Overflow Enterprise for Access Token generation:**
+
+**Generating an Access Token**
+
+To generate an Access Token for Enterprise, you must first ensure your API Application is correctly configured:
+
+* **API Application "Domain" Field Requirement:** When creating your API Application (where you obtain your Client ID and Client Secret), the "Domain" field *must* be populated with the base URL of your Stack Overflow Enterprise instance (e.g., `https://your.so-enterprise.url`). **Although the UI may mark this field as 'Optional,' failure to populate it will prevent Access Token generation and lead to a `"redirect_uri is not configured"` error during the OAuth flow.**
+
+Once your API Application is configured with a valid Domain, follow these steps to generate your Access Token:
 
 * Go to the page where you created your API key. Take note of the "Client ID" associated with your API key.
 * Go to the following URL, replacing the base URL, the `client_id`, and the base URL of the `redirect_uri` with your own:
 `https://YOUR.SO-ENTERPRISE.URL/oauth/dialog?client_id=111&redirect_uri=https://YOUR.SO-ENTERPRISE.URL/oauth/login_success`
 * You may be prompted to log in to Stack Overflow Enterprise if you're not already. Either way, you'll be redirected to a page that simply says "Authorizing Application"
 * In the URL of that page, you'll find your access token. Example: `https://YOUR.SO-ENTERPRISE.URL/oauth/login_success#access_token=YOUR_TOKEN`
+
+**Note on Access Token Requirements:**
+While API v3 now generally allows querying with just an API key for most GET requests, certain paths and data (e.g., `/images` and the email attribute on a `User` object) still specifically require an Access Token for access. If you encounter permissions errors on such paths, ensure you are using an Access Token.
 
 ## Basic Usage
 First, you'll need to populate a CSV with content to import into Stack Overflow for Teams. There's a [CSV Templates](https://github.com/StackExchange/so4t_api_import/tree/main/CSV%20Templates) directory in this project that you can use as a starting point. The CSV files found therein are preformatted with the proper column names.
@@ -47,12 +58,15 @@ You can also view available arguments and descriptions via the `--help` argument
 
 As the script runs, it will update the terminal window with the tasks it performs.
 
-## Advanced Usage
-For Enterprise customers, there's an advanced ability to impersonate users for the purposes of appropriately attributing imported content to specific users. Documentation of the functionality can be found here: https://support.stackenterprise.co/support/solutions/articles/22000245133-service-keys-identity-delegation-and-impersonation#impersonation
+## Advanced Usage: User Impersonation (Legacy Feature)
 
-Impersonation functionality is not enabled by default and requires opening a ticket with support@stackoverflow.com. It also requires a user account with admin privileges to configure impersonation and use this API script's impersonation functionality.
+**Important Note:** The user impersonation functionality is a legacy feature primarily intended for specific, complex content migration scenarios. Its use is generally **discouraged** for ongoing operations due to its advanced nature and potential complexities.
 
-Adding the `--impersonate` argument to the basic usage of the script allows you to leverage the impersonation functionality. You'll need to use an impersonation CSV format, which includes additional columns for the account IDs of the users to impersonate. Please see the [CSV Templates](https://github.com/StackExchange/so4t_api_import/tree/main/CSV%20Templates) directory and use a template with the 'impersonation' prefix.
+If you believe you require user impersonation for your specific import needs:
+
+* This functionality is not enabled by default and **requires opening a ticket with enterprise-support@stackoverflow.com to discuss your specific use case and enable it.**
+* It also requires a [service key](https://stackoverflowteams.help/en/articles/8043418-stack-overflow-for-teams-api-v3#manage-api-v3-applications-and-service-keys) (owner set to Community user) with admin privileges to configure and use this API script's impersonation functionality.
+* Adding the `--impersonate` argument to the basic usage of the script allows you to leverage this functionality. You'll need to use an impersonation CSV format, which includes additional columns for the account IDs of the users to impersonate. Please see the [CSV Templates](https://github.com/StackExchange/so4t_api_import/tree/main/CSV%20Templates) directory and use a template with the 'impersonation' prefix.
 
 ## Known limitations and considerations
 
