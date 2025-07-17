@@ -59,13 +59,12 @@ You can also view available arguments and descriptions via the `--help` argument
 As the script runs, it will update the terminal window with the tasks it performs.
 
 ## Advanced Usage: User Impersonation (Legacy Feature)
-
 **Important Note:** The user impersonation functionality is a legacy feature primarily intended for specific, complex content migration scenarios. Its use is generally **discouraged** for ongoing operations due to its advanced nature and potential complexities.
 
 If you believe you require user impersonation for your specific import needs:
 
 * This functionality is not enabled by default and **requires opening a ticket with enterprise-support@stackoverflow.com to discuss your specific use case and enable it.**
-* It also requires a [service application](#user-applications-vs-service-applications) (owner set to Community user) with admin privileges to configure and use this API script's impersonation functionality.
+* It also requires a [service key](https://stackoverflowteams.help/en/articles/8043418-stack-overflow-for-teams-api-v3#manage-api-v3-applications-and-service-keys) (owner set to Community user) with admin privileges to configure and use this API script's impersonation functionality.
 * Adding the `--impersonate` argument to the basic usage of the script allows you to leverage this functionality. You'll need to use an impersonation CSV format, which includes additional columns for the account IDs of the users to impersonate. Please see the [CSV Templates](https://github.com/StackExchange/so4t_api_import/tree/main/CSV%20Templates) directory and use a template with the 'impersonation' prefix.
 
 ## Known limitations and considerations
