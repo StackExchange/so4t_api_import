@@ -1,8 +1,8 @@
-# Stack Overflow for Teams API Import (so4t_api_import)
-An API script for Stack Overflow for Teams that facilitates bulk-importing questions, answers, or articles from a CSV file.
+# Stack Internal API Import (so4t_api_import)
+An API script for Stack Internal that facilitates bulk-importing questions, answers, or articles from a CSV file.
 
 ## Requirements
-* A Stack Overflow for Teams instance (Business or Enterprise)
+* A Stack Internal instance (Business or Enterprise)
 * Python 3.x ([download](https://www.python.org/downloads/))
 * Operating system: Linux, MacOS, or Windows
 
@@ -20,27 +20,27 @@ An API script for Stack Overflow for Teams that facilitates bulk-importing quest
 
 For the Business tier, you'll need a [personal access token](https://stackoverflowteams.help/en/articles/4385859-stack-overflow-for-teams-api) (PAT). You'll need to obtain an API key and an access token for Enterprise. Documentation for creating an Enterprise key and token can be found within your instance at this url: `https://[your_site]/api/docs/authentication`
 
-**Before proceeding, please note a critical step when creating your API Application in Stack Overflow Enterprise for Access Token generation:**
+**Before proceeding, please note a critical step when creating your API Application in Stack Internal (Enterprise) for Access Token generation:**
 
 **Generating an Access Token**
 
 To generate an Access Token for Enterprise, you must first ensure your API Application is correctly configured:
 
-* **API Application "Domain" Field Requirement:** When creating your API Application (where you obtain your Client ID and Client Secret), the "Domain" field *must* be populated with the base URL of your Stack Overflow Enterprise instance (e.g., `https://your.so-enterprise.url`). **Although the UI may mark this field as 'Optional,' failure to populate it will prevent Access Token generation and lead to a `"redirect_uri is not configured"` error during the OAuth flow.**
+* **API Application "Domain" Field Requirement:** When creating your API Application (where you obtain your Client ID and Client Secret), the "Domain" field *must* be populated with the base URL of your Stack Internal (Enterprise) instance (e.g., `https://your.stack-internal-enterprise.url`). **Although the UI may mark this field as 'Optional,' failure to populate it will prevent Access Token generation and lead to a `"redirect_uri is not configured"` error during the OAuth flow.**
 
 Once your API Application is configured with a valid Domain, follow these steps to generate your Access Token:
 
 * Go to the page where you created your API key. Take note of the "Client ID" associated with your API key.
 * Go to the following URL, replacing the base URL, the `client_id`, and the base URL of the `redirect_uri` with your own:
-`https://YOUR.SO-ENTERPRISE.URL/oauth/dialog?client_id=111&redirect_uri=https://YOUR.SO-ENTERPRISE.URL/oauth/login_success`
-* You may be prompted to log in to Stack Overflow Enterprise if you're not already. Either way, you'll be redirected to a page that simply says "Authorizing Application"
-* In the URL of that page, you'll find your access token. Example: `https://YOUR.SO-ENTERPRISE.URL/oauth/login_success#access_token=YOUR_TOKEN`
+`https://YOUR.SO-INTERNAL-ENTERPRISE.URL/oauth/dialog?client_id=111&redirect_uri=https://YOUR.SO-INTERNAL-ENTERPRISE.URL/oauth/login_success`
+* You may be prompted to log in to Stack Internal (Enterprise) if you're not already. Either way, you'll be redirected to a page that simply says "Authorizing Application"
+* In the URL of that page, you'll find your access token. Example: `https://YOUR.SO-INTERNAL-ENTERPRISE.URL/oauth/login_success#access_token=YOUR_TOKEN`
 
 **Note on Access Token Requirements:**
 While API v3 now generally allows querying with just an API key for most GET requests, certain paths and data (e.g., `/images` and the email attribute on a `User` object) still specifically require an Access Token for access. If you encounter permissions errors on such paths, ensure you are using an Access Token.
 
 ## Basic Usage
-First, you'll need to populate a CSV with content to import into Stack Overflow for Teams. There's a [CSV Templates](https://github.com/StackExchange/so4t_api_import/tree/main/CSV%20Templates) directory in this project that you can use as a starting point. The CSV files found therein are preformatted with the proper column names.
+First, you'll need to populate a CSV with content to import into Stack Internal. There's a [CSV Templates](https://github.com/StackExchange/so4t_api_import/tree/main/CSV%20Templates) directory in this project that you can use as a starting point. The CSV files found therein are preformatted with the proper column names.
 
 Once a CSV file is created, open a terminal window and navigate to the directory where you unpacked the script. Examples of running the script:
 * Importing questions into Business from a CSV file named 'questions.csv': 

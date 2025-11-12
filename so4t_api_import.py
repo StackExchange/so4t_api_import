@@ -1,5 +1,5 @@
 '''
-This Python script is a working proof of concept example of using Stack Overflow APIs for Content Import. 
+This Python script is a working proof of concept example of using Stack Internal APIs for Content Import. 
 If you run into difficulties, please leave feedback in the Github Issues.
 '''
 
@@ -45,24 +45,24 @@ def get_args():
     parser = argparse.ArgumentParser(
         prog='so4t_api_import.py',
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        description='Uses the Stack Overflow for Teams API to import \
+        description='Uses the Stack Internal API to import \
         data from a file.',
-        # epilog = 'Example for Stack Overflow Business: \n'
+        # epilog = 'Example for Stack Internal (Business): \n'
         #         'python3 so4t_api_import.py --url "https://stackoverflowteams.com/c/TEAM-NAME" '
         #         '--token "YOUR_TOKEN" \n\n'
-        #         'Example for Stack Overflow Enterprise: \n'
+        #         'Example for Stack Internal (Enterprise): \n'
         #         'python3 so4t_api_import.py --url "https://SUBDOMAIN.stackenterprise.co" '
         #         '--key "YOUR_KEY" --token "YOUR_TOKEN" --\n\n')
     )
     parser.add_argument('--url', 
                         type=str,
-                        help='Base URL for your Stack Overflow for Teams instance.')
+                        help='Base URL for your Stack Internal instance.')
     parser.add_argument('--token',
                         type=str,
-                        help='API token for your Stack Overflow for Teams instance.')
+                        help='API token for your Stack Internal instance.')
     parser.add_argument('--key',
                         type=str,
-                        help='API key for your Stack Overflow Enterprise instance.')
+                        help='API key for your Enterprise instance.')
     parser.add_argument('--csv',
                         type=str,
                         help='Path to CSV file to import.')
@@ -214,7 +214,7 @@ class V2Client(object):
     def __init__(self, args):
 
         if "stackoverflowteams.com" in args.url:
-            self.soe = False # Stack Overflow for Teams
+            self.soe = False # Stack Internal Business or Basic
             self.api_url = "https://api.stackoverflowteams.com/2.3"
             self.team_slug = args.url.split("https://stackoverflowteams.com/c/")[1]
             self.api_key = None
@@ -226,7 +226,7 @@ class V2Client(object):
                 'User-Agent': 'so4t_api_import/1.0 (http://your-app-url.com; your-contact@email.com)'
             }
         else:
-            self.soe = True # Stack Overflow Enterprise
+            self.soe = True # Stack Internal (Enterprise)
             self.api_url = args.url + "/api/2.3"
             self.team_slug = None
             self.api_key = args.key
@@ -248,14 +248,14 @@ class V2Client(object):
         ssl_verify = True
         
         params = {}
-        if self.soe: # Stack Overflow Enterprise
+        if self.soe: # Stack Internal (Enterprise)
             # Add User-Agent header
             headers = {
                 'X-API-Key': self.api_key,
                 'X-API-Access-Token': self.token,
                 'User-Agent': 'so4t_api_import/1.0 (http://your-app-url.com; your-contact@email.com)'
             }
-        else: # Stack Overflow for Teams
+        else: # Stack Internal Business or Basic
             # Add User-Agent header
             headers = {
                 'X-API-Access-Token': self.token,
@@ -321,7 +321,7 @@ class V2Client(object):
         get_response = getattr(requests, method, None)
         endpoint_url = self.api_url + endpoint
 
-        if self.soe: # Stack Overflow Enterprise
+        if self.soe: # Stack Internal (Enterprise)
             if self.impersonation_token: # If an impersonation token is provided, use it
                 token = self.impersonation_token
             else:
@@ -330,7 +330,7 @@ class V2Client(object):
                 'X-API-Key': self.api_key,
                 'X-API-Access-Token': token
             }
-        else: # Stack Overflow for Teams
+        else: # Stack Internal Business or Basic
             headers = {'X-API-Access-Token': self.token}
             params['team'] = self.team_slug
 
