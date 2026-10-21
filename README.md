@@ -94,4 +94,4 @@ No npm dependencies are needed for those commands. Tests cover CSV parsing, vali
 
 An optional real-browser smoke suite is in `tests/browser-smoke.cjs`. Install Playwright in your development environment and make Chrome available, then run `node tests/browser-smoke.cjs`. You can set `PLAYWRIGHT_MODULE` to an absolute Playwright module path and `CHROME_PATH` to a Chrome executable. It uses a local HTTPS mock API, synthetic credentials, and a temporary self-signed test certificate generated with OpenSSL. No real community data is written.
 
-The historical Python files and original templates in `legacy/` are deliberately unchanged and are not part of the supported runtime or test suite.
+The historical Python source and original templates in `legacy/` are not part of the supported runtime or test suite. Their dependency pins receive security updates and require Python 3.10 or newer; the historical importer remains unsupported.
