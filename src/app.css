@@ -1,0 +1,40 @@
+/* Layout only; components, colors, and typography come from Stacks 3. */
+body { margin: 0; background: var(--black-100); }
+[hidden] { display: none !important; }
+.app-header { background: var(--white); border-top: 3px solid var(--orange-400); border-bottom: 1px solid var(--black-150); }
+.header-inner { max-width: 1232px; margin: auto; padding: 16px 32px; }
+.brand-mark { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 6px; background: var(--orange-400); color: var(--black); font-size: 19px; font-weight: 800; }
+.header-divider { height: 20px; width: 1px; background: var(--black-200); }
+.app-main { max-width: 1232px; margin: auto; padding: 44px 32px 24px; }
+.page-heading { margin-bottom: 32px; }
+.eyebrow { color: var(--black-500); font-size: 11px; font-weight: 700; letter-spacing: 1.25px; }
+.workspace { display: grid; grid-template-columns: minmax(0, 1fr) 296px; align-items: start; gap: 28px; }
+.steps { min-width: 0; display: grid; gap: 20px; }
+.step-card { padding: 24px; background: var(--white); }
+.section-heading { display: flex; gap: 12px; align-items: start; margin-bottom: 24px; }
+.step-number { display: grid; place-items: center; flex-shrink: 0; width: 28px; height: 28px; border: 1px solid var(--black-200); border-radius: 50%; color: var(--black-500); font-weight: 600; }
+.plain-fieldset { min-width: 0; border: 0; padding: 0; margin: 0; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.upload-panel { padding: 20px; border: 1px dashed var(--black-250); border-radius: 6px; background: var(--black-050); }
+.empty-state { padding: 24px; text-align: center; color: var(--black-400); background: var(--black-100); border-radius: 6px; }
+.guide-list { padding-left: 20px; margin: 0; }
+.guide-list li { padding-left: 4px; margin-bottom: 20px; }
+.guide-list li:last-child { margin-bottom: 0; }
+.summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--black-150); border-radius: 6px; padding: 16px; }
+.summary-grid > div { display: flex; flex-direction: column; gap: 4px; }
+.metric { font-size: 24px; font-weight: 600; line-height: 1.2; }
+.preview-container { max-height: 520px; overflow: auto; }
+.preview-container table { table-layout: fixed; width: 100%; }
+.preview-container th:first-child { width: 65px; }
+.preview-container th:last-child { width: 28%; }
+.preview-container td { overflow-wrap: anywhere; vertical-align: top; }
+.preview-container pre { white-space: pre-wrap; max-height: 200px; overflow: auto; font-family: inherit; font-size: 12px; margin: 8px 0; }
+.destination, .s-notice { overflow-wrap: anywhere; }
+.s-description { line-height: 1.5; }
+summary { cursor: pointer; }
+progress { height: 8px; accent-color: var(--theme-secondary-400); }
+.app-footer { border-top: 1px solid var(--black-150); margin-top: 36px; padding-top: 20px; display: flex; gap: 8px; flex-wrap: wrap; }
+.skip-link { position: absolute; left: 16px; top: -80px; padding: 12px; background: var(--white); z-index: 2; }
+.skip-link:focus { top: 8px; }
+@media (max-width: 900px) { .workspace { grid-template-columns: 1fr; } .guide { display: grid; gap: 16px; } .guide > * { margin: 0 !important; } }
+@media (max-width: 540px) { .header-inner { padding: 12px 16px; } .header-divider, .header-divider + span { display: none; } .app-main { padding: 28px 16px 20px; } .step-card { padding: 18px; } .form-grid { grid-template-columns: 1fr; } .preview-container th:first-child { width: 50px; } .preview-container th:last-child { width: 32%; } }

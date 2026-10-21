@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="no-referrer">
+    <title>Content import · Stack Internal</title>
+    <style>/* STACKS_CSS */</style>
+    <style>/* APP_CSS */</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="app-header">
+    <div class="header-inner d-flex ai-center jc-space-between g16">
+        <div class="d-flex ai-center g12"><span class="brand-mark" aria-hidden="true">si</span><span class="fs-body3 fw-bold">Stack Internal</span><span class="header-divider" aria-hidden="true"></span><span class="fc-black-500">Content import</span></div>
+        <span class="s-badge">API v3</span>
+    </div>
+</header>
+<main id="main" class="app-main">
+    <div class="page-heading">
+        <p class="eyebrow mb8">BRING YOUR KNOWLEDGE TOGETHER</p>
+        <h1 class="fs-headline2 mb12">A new home for your content.</h1>
+        <p class="fs-body3 fc-black-500 mb0">Import questions, answers, and articles from a CSV. Review everything before publishing.</p>
+    </div>
+    <noscript><div class="s-notice s-notice__danger d-block p12 mb24">Enable JavaScript to use this importer.</div></noscript>
+    <div class="workspace">
+    <div class="steps">
+        <section class="ba bc-black-200 bar-lg step-card" aria-labelledby="connect-heading">
+            <div class="section-heading"><span class="step-number">1</span><div><h2 id="connect-heading" class="fs-title mb4">Connect your community</h2><p class="fc-black-500 mb0">Choose the destination and check your access.</p></div></div>
+            <form id="connection-form">
+                <fieldset id="connection-fields" class="plain-fieldset">
+                    <div class="s-form-group mb16">
+                        <label class="s-label" for="site-url">Site or API v3 URL</label>
+                        <input class="s-input" id="site-url" type="url" required spellcheck="false" autocomplete="off" placeholder="https://your-site.stackenterprise.co" aria-describedby="url-help">
+                        <p id="url-help" class="s-description mt4 mb0">Enterprise site root, full v3 base URL, or stackoverflowteams.com/c/your-team.</p>
+                    </div>
+                    <div class="s-form-group mb16">
+                        <label class="s-label" for="token">API access token</label>
+                        <input class="s-input" id="token" type="password" required autocomplete="off" spellcheck="false" placeholder="Paste your token" aria-describedby="token-help">
+                        <p id="token-help" class="s-description mt4 mb0">Requires write access. Your token stays in this tab and is sent only to the destination API.</p>
+                    </div>
+                    <button class="s-btn s-btn__tonal" id="test-connection" type="submit">Test connection</button>
+                </fieldset>
+            </form>
+            <div id="connection-status" class="mt16" role="status" aria-live="polite" hidden></div>
+        </section>
+
+        <section class="ba bc-black-200 bar-lg step-card" aria-labelledby="source-heading">
+            <div class="section-heading"><span class="step-number">2</span><div><h2 id="source-heading" class="fs-title mb4">Prepare your content</h2><p class="fc-black-500 mb0">One row per question or article. Answers are optional.</p></div></div>
+            <fieldset id="source-fields" class="plain-fieldset">
+                <div class="form-grid mb16">
+                    <div class="s-form-group"><label class="s-label" for="kind">Content type</label><div class="s-select"><select id="kind"><option value="questions">Questions &amp; answers</option><option value="articles">Articles</option></select></div></div>
+                    <div class="s-form-group"><label class="s-label" for="authorship">Publish as</label><div class="s-select"><select id="authorship"><option value="current">Token owner</option><option value="attributed">Preserve authors</option></select></div></div>
+                </div>
+                <div id="author-help" class="s-notice s-notice__info d-block p12 mb16" hidden>Use existing <strong>site user IDs</strong>, not account IDs. Requires <code>write_access</code> and <code>content_import</code> scopes, permission to import, and content import enabled on the destination.</div>
+                <div id="article-permissions" class="s-form-group mb16" hidden><label class="s-label" for="editable-by">Who can edit the articles?</label><div class="s-select"><select id="editable-by"><option value="ownerOnly">Article owner only</option><option value="everyone">Everyone</option></select></div></div>
+                <p id="import-permissions-help" class="s-description mb16" hidden>Author-preserving articles use the destination’s content-import editing policy. This API route does not accept an editing-permissions override.</p>
+                <div class="upload-panel mb16">
+                    <label for="csv-file" class="s-label d-block mb8">Choose a CSV file</label>
+                    <input id="csv-file" class="s-input" type="file" accept=".csv,text/csv" aria-describedby="file-help">
+                    <p id="file-help" class="s-description mt8 mb0">UTF-8 · up to 20 MB and 10,000 rows · Markdown supported</p>
+                </div>
+                <div class="d-flex ai-center fw-wrap g8"><button id="preview" class="s-btn" type="button">Validate &amp; preview</button><button id="template" class="s-btn s-btn__clear" type="button">Download CSV template</button></div>
+            </fieldset>
+        </section>
+
+        <section class="ba bc-black-200 bar-lg step-card" aria-labelledby="review-heading">
+            <div class="section-heading"><span class="step-number">3</span><div><h2 id="review-heading" class="fs-title mb4">Review &amp; import</h2><p class="fc-black-500 mb0" id="review-subtitle">Your content preview will appear here.</p></div></div>
+            <div id="empty-state" class="empty-state"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 3h10l4 4v14H5zM14 3v5h5M8 12h8M8 16h6"/></svg><p class="fw-bold mt12 mb4">Ready when your CSV is.</p><p class="fc-black-500 mb0">Choose a file, then validate it to review the import.</p></div>
+            <div id="validation" role="status" aria-live="polite" hidden></div>
+            <div id="review" hidden>
+                <div class="summary-grid mb16"><div><span id="row-count" class="metric">0</span><span class="s-description">Content rows</span></div><div><span id="answer-count" class="metric">0</span><span class="s-description">Answers</span></div><div><span id="complete-count" class="metric">0</span><span class="s-description">Rows completed</span></div></div>
+                <div class="s-table-container preview-container"><table class="s-table"><caption class="v-visible-sr">Import preview and per-row results</caption><thead><tr><th scope="col">Row</th><th scope="col">Content</th><th scope="col">Status</th></tr></thead><tbody id="preview-rows"></tbody></table></div>
+                <div class="d-flex jc-space-between ai-center g8 mt12 mb16" id="pagination"><button type="button" class="s-btn s-btn__clear s-btn__sm" id="previous">Previous</button><span id="page-label" class="s-description"></span><button type="button" class="s-btn s-btn__clear s-btn__sm" id="next">Next</button></div>
+                <p id="destination" class="s-description destination"></p>
+                <div class="d-flex ai-start g8 mb16"><input id="confirm" class="s-checkbox mt4" type="checkbox"><label for="confirm">I’ve reviewed the destination and content. Create these posts in the community.</label></div>
+                <div class="d-flex ai-center fw-wrap g8"><button id="start" class="s-btn" type="button" disabled>Start import</button><button id="stop" class="s-btn s-btn__tonal" type="button" hidden>Stop after current request</button><button id="download-results" class="s-btn s-btn__clear" type="button" disabled>Download results</button><button id="reset" class="s-btn s-btn__clear s-btn__tonal" type="button" hidden>Start a new import</button></div>
+                <progress id="progress" class="w100 mt16" max="1" value="0" aria-label="Completed content rows"></progress>
+            </div>
+            <div id="run-status" class="mt16" role="status" aria-live="polite" hidden></div>
+        </section>
+    </div>
+    <aside class="guide" aria-label="Import guidance">
+        <div class="ba bc-black-200 bar-lg bg-white p24 mb16">
+            <h2 class="fs-body3 fw-bold mb16">A smooth move starts here</h2>
+            <ol class="guide-list"><li><strong>Start with a template</strong><p class="fc-black-500 mt4">Keep the header row and add your content. Wrap multiline text in double quotes.</p></li><li><strong>Review before publishing</strong><p class="fc-black-500 mt4">Validation checks the file locally. Your community applies its own content and permission rules.</p></li><li><strong>Keep your results</strong><p class="fc-black-500 mt4 mb0">Download a record of created post IDs and any errors before closing the tab.</p></li></ol>
+        </div>
+        <div class="s-notice s-notice__info d-block p16"><h2 class="fs-body2 fw-bold mb8">One file. No installation.</h2><p class="mb0">This page includes its styles and scripts. CSV preview works offline; importing needs an internet connection and browser access to your API.</p></div>
+        <details class="mt24"><summary class="fw-bold">Connection troubleshooting</summary><p class="fc-black-500 mt12">The API must allow this page’s origin, <code>Authorization</code> and <code>Content-Type</code> headers, and GET/POST requests through CORS. An opened HTML file usually has origin <code>null</code>.</p><p class="fc-black-500">If blocked, ask your administrator to host this same file on the API’s origin or an approved origin. Hosting on localhost alone does not grant cross-origin access.</p></details>
+        <p class="s-description mt24">Credentials and progress are kept in memory only. Reloading clears them. Imports create new posts; they do not update or deduplicate existing content.</p>
+    </aside>
+    </div>
+    <footer class="app-footer s-description">Stack Internal content import <span aria-hidden="true">·</span> Built with Stacks 3 <span aria-hidden="true">·</span> API v3 only</footer>
+</main>
+<script>/* IMPORTER_JS */</script>
+<script>/* APP_JS */</script>
+</body>
+</html>

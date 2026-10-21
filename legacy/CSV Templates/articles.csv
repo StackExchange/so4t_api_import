@@ -1,0 +1,10 @@
+title,body,type,tags
+Article title that is less than 150 characters,"Article body that is less than 100,000 characters. Supports markdown notation for formatting.","Pick one of four article types: knowledge-article, how-to-guide, announcement, and policy","Up to four tags, which are separated by spaces"
+Quantum Teleportation,"**What is quantum teleporting?** 
+Quantum teleportation is a process in which quantum information (e.g. the exact state of an atom or photon) can be transmitted (exactly, in principle) from one location to another, with the help of classical communication and previously shared quantum entanglement between the sending and receiving location. Because it depends on classical communication, which can proceed no faster than the speed of light, it cannot be used for faster-than-light transport or communication of classical bits. While it has proven possible to teleport one or more qubits of information between two (entangled) quanta, this has not yet been achieved between anything larger than molecules. (source: [Wikipedia](https://en.wikipedia.org/wiki/Quantum_teleportation)) 
+
+**Why beta?** 
+We recommend only teleporting non-living things in beta, and not use humans or animals yet. 
+
+**Will there be a V2 of this feature?** 
+Yes! We will be adding the ability to teleport living beings, teleporting in groups, and opening more gateways in addition to other features based on customer feedback, over the next few releases.",announcement,teleportation project-nightcrawler product-release

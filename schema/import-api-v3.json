@@ -1,0 +1,2480 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "Stack Internal Community API",
+    "version": "v3"
+  },
+  "security": [
+    {
+      "oauth2": []
+    }
+  ],
+  "paths": {
+    "/users/me": {
+      "get": {
+        "tags": [
+          "Users - Main"
+        ],
+        "summary": "Retrieve logged-in user details",
+        "description": "Retrieves details for the logged-in user.",
+        "responses": {
+          "200": {
+            "description": "User details found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDetailsResponseModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User details not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "Invalid access token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/questions": {
+      "post": {
+        "tags": [
+          "Questions - Main"
+        ],
+        "summary": "Create a question",
+        "description": "Creates a question.",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionRequestModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionRequestModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionRequestModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Question created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionResponseModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "Invalid access token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "write_access"
+            ]
+          }
+        ]
+      }
+    },
+    "/questions/{questionId}/answers": {
+      "post": {
+        "tags": [
+          "Answers - Main"
+        ],
+        "summary": "Create an answer",
+        "description": "Creates an answer to a question, identified by question ID.",
+        "parameters": [
+          {
+            "name": "questionId",
+            "in": "path",
+            "description": "Question ID",
+            "required": true,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 123
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnswerRequestModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnswerRequestModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnswerRequestModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnswerRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Answer created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnswerResponseModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "Invalid access token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "write_access"
+            ]
+          }
+        ]
+      }
+    },
+    "/articles": {
+      "post": {
+        "tags": [
+          "Articles - Main"
+        ],
+        "summary": "Create an article",
+        "description": "Creates an article.",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArticleRequestModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArticleRequestModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArticleRequestModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArticleRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Article created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArticleResponseModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "Invalid access token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "write_access"
+            ]
+          }
+        ]
+      }
+    },
+    "/content-import/questions": {
+      "post": {
+        "tags": [
+          "Content Import - Main"
+        ],
+        "summary": "Import a question with an existing site user as its visible author",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentImportQuestionRequestModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentImportQuestionRequestModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentImportQuestionRequestModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentImportQuestionRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Question imported",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContentImportQuestionResponseModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid author or question",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Content import is disabled or the author was not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "Invalid access token"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "write_access",
+              "content_import"
+            ]
+          }
+        ]
+      }
+    },
+    "/content-import/questions/{questionId}/answers": {
+      "post": {
+        "tags": [
+          "Content Import - Main"
+        ],
+        "summary": "Import an answer with an existing site user as its visible author",
+        "parameters": [
+          {
+            "name": "questionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentImportAnswerRequestModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentImportAnswerRequestModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentImportAnswerRequestModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentImportAnswerRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Answer imported",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContentImportAnswerResponseModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid author or answer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Question or author not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "Invalid access token"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "write_access",
+              "content_import"
+            ]
+          }
+        ]
+      }
+    },
+    "/content-import/articles": {
+      "post": {
+        "tags": [
+          "Content Import - Main"
+        ],
+        "summary": "Import a published Article with an existing site user as its visible author",
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentImportArticleRequestModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentImportArticleRequestModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentImportArticleRequestModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentImportArticleRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Article imported",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContentImportArticleResponseModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid author or Article",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Author not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "Invalid access token"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "write_access",
+              "content_import"
+            ]
+          }
+        ]
+      }
+    },
+    "/teams/{team}/users/me": {
+      "get": {
+        "tags": [
+          "Users - Private Teams"
+        ],
+        "summary": "Retrieve logged-in user details",
+        "description": "Retrieves details for the logged-in user.",
+        "parameters": [
+          {
+            "name": "team",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User details found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDetailsResponseModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User details not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "Invalid access token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teams/{team}/questions": {
+      "post": {
+        "tags": [
+          "Questions - Private Teams"
+        ],
+        "summary": "Create a question",
+        "description": "Creates a question.",
+        "parameters": [
+          {
+            "name": "team",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionRequestModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionRequestModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionRequestModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Question created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionResponseModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "Invalid access token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "write_access"
+            ]
+          }
+        ]
+      }
+    },
+    "/teams/{team}/questions/{questionId}/answers": {
+      "post": {
+        "tags": [
+          "Answers - Private Teams"
+        ],
+        "summary": "Create an answer",
+        "description": "Creates an answer to a question, identified by question ID.",
+        "parameters": [
+          {
+            "name": "questionId",
+            "in": "path",
+            "description": "Question ID",
+            "required": true,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 123
+          },
+          {
+            "name": "team",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnswerRequestModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnswerRequestModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnswerRequestModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnswerRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Answer created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnswerResponseModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "Invalid access token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "write_access"
+            ]
+          }
+        ]
+      }
+    },
+    "/teams/{team}/articles": {
+      "post": {
+        "tags": [
+          "Articles - Private Teams"
+        ],
+        "summary": "Create an article",
+        "description": "Creates an article.",
+        "parameters": [
+          {
+            "name": "team",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArticleRequestModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArticleRequestModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArticleRequestModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArticleRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Article created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArticleResponseModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "Invalid access token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "write_access"
+            ]
+          }
+        ]
+      }
+    },
+    "/teams/{team}/content-import/questions": {
+      "post": {
+        "tags": [
+          "Content Import - Private Teams"
+        ],
+        "summary": "Import a question with an existing site user as its visible author",
+        "parameters": [
+          {
+            "name": "team",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentImportQuestionRequestModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentImportQuestionRequestModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentImportQuestionRequestModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentImportQuestionRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Question imported",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContentImportQuestionResponseModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid author or question",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Content import is disabled or the author was not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "Invalid access token"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "write_access",
+              "content_import"
+            ]
+          }
+        ]
+      }
+    },
+    "/teams/{team}/content-import/questions/{questionId}/answers": {
+      "post": {
+        "tags": [
+          "Content Import - Private Teams"
+        ],
+        "summary": "Import an answer with an existing site user as its visible author",
+        "parameters": [
+          {
+            "name": "questionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "team",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentImportAnswerRequestModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentImportAnswerRequestModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentImportAnswerRequestModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentImportAnswerRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Answer imported",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContentImportAnswerResponseModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid author or answer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Question or author not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "Invalid access token"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "write_access",
+              "content_import"
+            ]
+          }
+        ]
+      }
+    },
+    "/teams/{team}/content-import/articles": {
+      "post": {
+        "tags": [
+          "Content Import - Private Teams"
+        ],
+        "summary": "Import a published Article with an existing site user as its visible author",
+        "parameters": [
+          {
+            "name": "team",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentImportArticleRequestModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentImportArticleRequestModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentImportArticleRequestModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentImportArticleRequestModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Article imported",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContentImportArticleResponseModel"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid author or Article",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Author not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "Invalid access token"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": [
+              "write_access",
+              "content_import"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AnswerRequestModel": {
+        "title": "Answer request",
+        "required": [
+          "body"
+        ],
+        "type": "object",
+        "properties": {
+          "body": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Answer body. The main content of the answer in Markdown format.",
+            "example": "This is a common answer to a common question."
+          }
+        },
+        "additionalProperties": false
+      },
+      "AnswerResponseModel": {
+        "title": "Answer",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID. The answer's unique identifier.",
+            "format": "int32",
+            "example": 123
+          },
+          "questionId": {
+            "type": "integer",
+            "description": "Question ID. The ID of the answered question.",
+            "format": "int32",
+            "example": 1234
+          },
+          "body": {
+            "type": "string",
+            "description": "Answer body. The main content of the answer in HTML format.",
+            "example": "<p>This is a common answer to a common question</p>"
+          },
+          "score": {
+            "type": "integer",
+            "description": "Answer Score. Calculated by subtracting the number of downvotes from the number of upvotes",
+            "format": "int32",
+            "example": 23
+          },
+          "isAccepted": {
+            "type": "boolean",
+            "description": "Accepted answer. Returns true if this is the accepted answer for the question.",
+            "example": true
+          },
+          "isDeleted": {
+            "type": "boolean",
+            "description": "Answer deleted. Returns true if the answer was deleted.",
+            "example": false
+          },
+          "isBookmarked": {
+            "type": "boolean",
+            "description": "Answer bookmarked. Returns true if the logged-in user bookmarked the answer.",
+            "example": true
+          },
+          "isFollowed": {
+            "type": "boolean",
+            "description": "Answer followed. Returns true if the logged-in user followed the answer.",
+            "example": false
+          },
+          "creationDate": {
+            "type": "string",
+            "description": "Creation date. The date and time the answer was created.",
+            "format": "date-time",
+            "example": "2022-07-25T08:00:51.170641Z"
+          },
+          "lockedDate": {
+            "type": "string",
+            "description": "Locked date. The date and time the answer was locked.",
+            "format": "date-time",
+            "nullable": true,
+            "example": null
+          },
+          "lastEditDate": {
+            "type": "string",
+            "description": "Last edit date. The date and time the answer was last edited.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2022-07-28T12:36:31.827519Z"
+          },
+          "lastActivityDate": {
+            "type": "string",
+            "description": "Last activity date. The date and time the answer last had activity.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2022-07-28T12:36:31.827519Z"
+          },
+          "deletionDate": {
+            "type": "string",
+            "description": "Deletion date. The date and time the answer was deleted.",
+            "format": "date-time",
+            "nullable": true,
+            "example": null
+          },
+          "owner": {
+            "$ref": "#/components/schemas/UserSummaryResponseModel"
+          },
+          "lastEditor": {
+            "$ref": "#/components/schemas/UserSummaryResponseModel"
+          },
+          "lastActivityUser": {
+            "$ref": "#/components/schemas/UserSummaryResponseModel"
+          },
+          "commentCount": {
+            "type": "integer",
+            "description": "Comment count. The number of comments on the answer.",
+            "format": "int32",
+            "example": 12
+          },
+          "webUrl": {
+            "type": "string",
+            "description": "URL. The answer's direct URL.",
+            "nullable": true,
+            "example": "https://stackoverflowteams.com/a/16/17"
+          },
+          "shareLink": {
+            "type": "string",
+            "description": "Share link. The link to the answer for sharing.",
+            "nullable": true,
+            "example": "https://stackoverflowteams.com/a/16/17"
+          },
+          "userCanFollow": {
+            "type": "boolean",
+            "description": "User can follow answer. Returns true if the logged-in user can follow the answer.",
+            "example": true
+          },
+          "canBeFollowed": {
+            "type": "boolean",
+            "description": "Answer can be followed. Returns true if anyone can follow the answer.",
+            "example": true
+          },
+          "isSubjectMatterExpert": {
+            "type": "boolean",
+            "description": "Answer is from a subject matter expert.",
+            "example": false
+          },
+          "bodyMarkdown": {
+            "type": "string",
+            "description": "Body markdown. The main content of the answer in Markdown format.",
+            "example": "This is a common answer to a common question"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ArticlePermissionsRequestModel": {
+        "type": "object",
+        "properties": {
+          "editableBy": {
+            "$ref": "#/components/schemas/ArticlePermissionsType"
+          },
+          "editorUserIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "Editor User IDs. The identity of users who can edit this article",
+            "example": [
+              2,
+              20,
+              46
+            ]
+          },
+          "editorUserGroupIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "Editor User Group IDs. The identity of user groups who can edit this article",
+            "example": [
+              1001,
+              1002
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "ArticlePermissionsResponseModel": {
+        "type": "object",
+        "properties": {
+          "editableBy": {
+            "$ref": "#/components/schemas/ArticlePermissionsType"
+          },
+          "editorUsers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserSummaryResponseModel"
+            },
+            "description": "Editor Users. The individual users who can edit this article"
+          },
+          "editorUserGroups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserGroupResponseModel"
+            },
+            "description": "Editor User Groups. The user groups that can edit this article"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ArticlePermissionsType": {
+        "enum": [
+          "ownerOnly",
+          "specificEditors",
+          "everyone"
+        ],
+        "type": "string"
+      },
+      "ArticleRequestModel": {
+        "title": "Article request model",
+        "required": [
+          "body",
+          "permissions",
+          "tags",
+          "title",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Article title. The purpose of the article, stated briefly in one sentence.",
+            "example": "Python Style Guide"
+          },
+          "body": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Article body. The main content of the article in Markdown format.",
+            "example": "Python is the primary language for the Data Science Teams at Stack Overflow. This document is a style guide for how Python code is written at Stack Overflow."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tags. Tags associated with the article."
+          },
+          "type": {
+            "$ref": "#/components/schemas/ArticleType"
+          },
+          "expirationDate": {
+            "type": "string",
+            "description": "Expiration date. Optional date for when an announcement article should be automatically deleted. The date is evaluated in UTC.",
+            "format": "date",
+            "nullable": true,
+            "example": "2026-07-24"
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/ArticlePermissionsRequestModel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ArticleResponseModel": {
+        "title": "Article",
+        "type": "object",
+        "properties": {
+          "state": {
+            "$ref": "#/components/schemas/ArticleState"
+          },
+          "communities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CommunitySummaryResponseModel"
+            }
+          },
+          "id": {
+            "type": "integer",
+            "description": "ID. The article's unique identifier.",
+            "format": "int32",
+            "example": 123
+          },
+          "type": {
+            "$ref": "#/components/schemas/ArticleType"
+          },
+          "title": {
+            "type": "string",
+            "description": "Title. The actual article, stated briefly in one sentence.",
+            "example": "Python Style Guide"
+          },
+          "body": {
+            "type": "string",
+            "description": "Article body. The main content of the article in HTML format.",
+            "example": "<p>Python is the primary language for the Data Science Teams at Stack Overflow. This document is a style guide for how Python code is written at Stack Overflow.</p>"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagSummaryResponseModel"
+            },
+            "description": "Tags. Tags associated with the article."
+          },
+          "owner": {
+            "$ref": "#/components/schemas/UserSummaryResponseModel"
+          },
+          "lastEditor": {
+            "$ref": "#/components/schemas/UserSummaryResponseModel"
+          },
+          "creationDate": {
+            "type": "string",
+            "description": "Creation date. The date and time the article was created.",
+            "format": "date-time",
+            "example": "2018-04-08T10:30:21.254Z"
+          },
+          "lastActivityDate": {
+            "type": "string",
+            "description": "Last activity date. The date and time the article or one of its answers last had significant activity. This includes (but is not limited to) an edit, rollback, change to tags, new answer, bounty added, bump.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2022-12-21T17:16:48.462Z"
+          },
+          "expirationDate": {
+            "type": "string",
+            "description": "Expiration date. The date when an announcement article should be automatically deleted. The date is evaluated in UTC.",
+            "format": "date",
+            "nullable": true,
+            "example": "2026-07-24"
+          },
+          "score": {
+            "type": "integer",
+            "description": "Score. Calculated by subtracting the number of downvotes from the number of upvotes",
+            "format": "int32",
+            "example": 23
+          },
+          "commentCount": {
+            "type": "integer",
+            "description": "Comment count. The number of comments on the article.",
+            "format": "int32",
+            "example": 12
+          },
+          "viewCount": {
+            "type": "integer",
+            "description": "View count. The number of times users have viewed this article.",
+            "format": "int32",
+            "example": 85964
+          },
+          "webUrl": {
+            "type": "string",
+            "description": "URL. The article's direct URL.",
+            "example": "https://stackoverflow.com/articles/927358"
+          },
+          "shareUrl": {
+            "type": "string",
+            "description": "Share URL. The article's URL for sharing.",
+            "example": "https://stackoverflow.com/articles/927358"
+          },
+          "isDeleted": {
+            "type": "boolean",
+            "description": "Is deleted. Returns true if the article was deleted.",
+            "example": false
+          },
+          "isObsolete": {
+            "type": "boolean",
+            "description": "Is obsolete. Returns true if the article was marked by a moderator as obsolete.",
+            "example": false
+          },
+          "isClosed": {
+            "type": "boolean",
+            "description": "Is closed. Returns true if the article was closed by a moderator.",
+            "example": false
+          },
+          "bodyMarkdown": {
+            "type": "string",
+            "description": "Body markdown. The main content of the article in Markdown format.",
+            "example": "I accidentally committed the wrong files to Git, but didn't push the commit to the server yet."
+          },
+          "userIsFollowing": {
+            "type": "boolean",
+            "description": "User is following. Returns true if the logged-in user followed the article.",
+            "example": false
+          },
+          "userHasUpvoted": {
+            "type": "boolean",
+            "description": "User has upvoted. Returns true if the logged-in user has upvoted the article.",
+            "example": false
+          },
+          "userHasDownvoted": {
+            "type": "boolean",
+            "description": "User has downvoted. Returns true if the logged-in user has downvoted the article.",
+            "example": false
+          },
+          "userCanEdit": {
+            "type": "boolean",
+            "description": "User can edit. Returns true if the this article can be edited by the authenticated user.",
+            "example": false
+          },
+          "permissions": {
+            "$ref": "#/components/schemas/ArticlePermissionsResponseModel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ArticleState": {
+        "enum": [
+          "published",
+          "draft"
+        ],
+        "type": "string"
+      },
+      "ArticleType": {
+        "enum": [
+          "knowledgeArticle",
+          "announcement",
+          "policy",
+          "howToGuide"
+        ],
+        "type": "string",
+        "description": "Article Type"
+      },
+      "BadgeCountsResponseModel": {
+        "title": "Badge counts",
+        "type": "object",
+        "properties": {
+          "gold": {
+            "type": "integer",
+            "description": "Gold. The number of gold badges earned by the user.",
+            "format": "int32",
+            "example": 1
+          },
+          "silver": {
+            "type": "integer",
+            "description": "Silver. The number of silver badges earned by the user.",
+            "format": "int32",
+            "example": 4
+          },
+          "bronze": {
+            "type": "integer",
+            "description": "Bronze. The number of bronze badges earned by the user.",
+            "format": "int32",
+            "example": 12
+          }
+        },
+        "additionalProperties": false
+      },
+      "BountyResponseModel": {
+        "title": "Bounty",
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "description": "Amount. The number of points the question asker will reward the poster of an accepted answer.",
+            "format": "int32",
+            "example": 50
+          },
+          "closes": {
+            "type": "string",
+            "description": "Closes. The date and time the bounty expires.",
+            "format": "date-time",
+            "example": "2022-10-12T7:16:48.462Z"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CommunitySummaryResponseModel": {
+        "title": "Community summary",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name. The community's name.",
+            "example": "CI/CD"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description. The community's description.",
+            "example": "All things pertaining to CI (continuous integration) and CD (continuous delivery)"
+          },
+          "id": {
+            "type": "integer",
+            "description": "ID. The community's ID.",
+            "format": "int32",
+            "example": 4
+          },
+          "memberCount": {
+            "type": "integer",
+            "description": "Member count. Number of members in the community.",
+            "format": "int32",
+            "example": 12
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagSummaryResponseModel"
+            },
+            "description": "Tags. The community's tags."
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentImportAnswerRequestModel": {
+        "title": "Content import answer request model",
+        "required": [
+          "body"
+        ],
+        "type": "object",
+        "properties": {
+          "authorId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "description": "Site-scoped ID of the existing user who will be displayed as the answer author.",
+            "format": "int32",
+            "example": 123
+          },
+          "body": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Answer body in Markdown format.",
+            "example": "This is an imported answer with its original author."
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentImportAnswerResponseModel": {
+        "title": "Imported answer",
+        "type": "object",
+        "properties": {
+          "importId": {
+            "type": "integer",
+            "description": "Durable content import audit identifier.",
+            "format": "int64"
+          },
+          "answer": {
+            "$ref": "#/components/schemas/AnswerResponseModel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentImportArticleRequestModel": {
+        "title": "Content import Article request model",
+        "required": [
+          "body",
+          "tags",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "authorId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "description": "Site-scoped ID of the existing user who will be displayed as the Article author.",
+            "format": "int32",
+            "example": 123
+          },
+          "title": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Article title.",
+            "example": "Python Style Guide"
+          },
+          "body": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Article body in Markdown format.",
+            "example": "This document describes how Python is written in our organization."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tags associated with the Article."
+          },
+          "type": {
+            "$ref": "#/components/schemas/ArticleType"
+          },
+          "expirationDate": {
+            "type": "string",
+            "description": "Optional expiration date for an announcement Article.",
+            "format": "date",
+            "nullable": true,
+            "example": "2026-12-31"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentImportArticleResponseModel": {
+        "title": "Imported Article",
+        "type": "object",
+        "properties": {
+          "importId": {
+            "type": "integer",
+            "description": "Durable content import audit identifier.",
+            "format": "int64"
+          },
+          "article": {
+            "$ref": "#/components/schemas/ArticleResponseModel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentImportQuestionRequestModel": {
+        "title": "Content import question request model",
+        "required": [
+          "body",
+          "tags",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "authorId": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "description": "Site-scoped ID of the existing user who will be displayed as the question author.",
+            "format": "int32",
+            "example": 123
+          },
+          "title": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Question title.",
+            "example": "How do I undo the most recent local commits in Git?"
+          },
+          "body": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Question body in Markdown format.",
+            "example": "I accidentally committed the wrong files to Git, but didn't push the commit yet."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tags associated with the question."
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContentImportQuestionResponseModel": {
+        "title": "Imported question",
+        "type": "object",
+        "properties": {
+          "importId": {
+            "type": "integer",
+            "description": "Durable content import audit identifier.",
+            "format": "int64"
+          },
+          "question": {
+            "$ref": "#/components/schemas/QuestionResponseModel"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MentionedUserGroupResponseModel": {
+        "title": "Mentioned user group",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID. The ID of user group mentioned in the question.",
+            "format": "int32",
+            "example": 23
+          },
+          "name": {
+            "type": "string",
+            "description": "Name. The name of user group mentioned in the question.",
+            "example": "Knowledgeable Users"
+          },
+          "memberCount": {
+            "type": "integer",
+            "description": "Member count. The number of members in the group mentioned in the question.",
+            "format": "int32",
+            "example": 64
+          }
+        },
+        "additionalProperties": false
+      },
+      "MentionedUserResponseModel": {
+        "title": "Mentioned user",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID. The ID of the user mentioned in the question.",
+            "format": "int32",
+            "example": 146
+          },
+          "name": {
+            "type": "string",
+            "description": "Name. The name of the user mentioned in the question.",
+            "example": "Expert User"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true,
+            "example": "/v3/errors/example-error"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true,
+            "example": "Error title"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true,
+            "example": 400
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true,
+            "example": "Error details"
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true,
+            "example": ""
+          }
+        },
+        "additionalProperties": {}
+      },
+      "QuestionRequestModel": {
+        "title": "Question request model",
+        "required": [
+          "body",
+          "tags",
+          "title"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Question title. The actual question, stated briefly in one sentence.",
+            "example": "How do I undo the most recent local commits in Git?"
+          },
+          "body": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Question body. The main content of the question in Markdown format.",
+            "example": "I accidentally committed the wrong files to Git, but didn't push the commit to the server yet."
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Tags. Tags associated with the question."
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuestionResponseModel": {
+        "title": "Question",
+        "type": "object",
+        "properties": {
+          "communities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CommunitySummaryResponseModel"
+            }
+          },
+          "id": {
+            "type": "integer",
+            "description": "ID. The question's unique identifier.",
+            "format": "int32",
+            "example": 123
+          },
+          "title": {
+            "type": "string",
+            "description": "Title. The actual question, stated briefly in one sentence.",
+            "example": "How do I undo the most recent local commits in Git?"
+          },
+          "body": {
+            "type": "string",
+            "description": "Question body. The main content of the question in HTML format.",
+            "example": "<p>I accidentally committed the wrong files to Git, but didn't push the commit to the server yet.</p>"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TagSummaryResponseModel"
+            },
+            "description": "Tags. Tags associated with the question."
+          },
+          "owner": {
+            "$ref": "#/components/schemas/UserSummaryResponseModel"
+          },
+          "lastEditor": {
+            "$ref": "#/components/schemas/UserSummaryResponseModel"
+          },
+          "creationDate": {
+            "type": "string",
+            "description": "Creation date. The date and time the question was created.",
+            "format": "date-time",
+            "example": "2018-04-08T10:30:21.254Z"
+          },
+          "lastActivityDate": {
+            "type": "string",
+            "description": "Last activity date. The date and time the question or one of its answers last had significant activity. This includes (but is not limited to) an edit, rollback, change to tags, new answer, bounty added, bump.",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2022-12-21T17:16:48.462Z"
+          },
+          "score": {
+            "type": "integer",
+            "description": "Score. Calculated by subtracting the number of downvotes from the number of upvotes",
+            "format": "int32",
+            "example": 23
+          },
+          "isAnswered": {
+            "type": "boolean",
+            "description": "Is answered. Returns true if the question has at least one upvoted answer.",
+            "example": true
+          },
+          "answerCount": {
+            "type": "integer",
+            "description": "Answer count. Number of answers to the question.",
+            "format": "int32",
+            "example": 2
+          },
+          "commentCount": {
+            "type": "integer",
+            "description": "Comment count. The number of comments on the question.",
+            "format": "int32",
+            "example": 12
+          },
+          "viewCount": {
+            "type": "integer",
+            "description": "View count. The number of times users have viewed this question.",
+            "format": "int32",
+            "example": 85964
+          },
+          "webUrl": {
+            "type": "string",
+            "description": "URL. The question's direct URL.",
+            "example": "https://stackoverflow.com/q/927358"
+          },
+          "shareUrl": {
+            "type": "string",
+            "description": "Share URL. The question's URL for sharing.",
+            "example": "https://stackoverflow.com/q/927358"
+          },
+          "isDeleted": {
+            "type": "boolean",
+            "description": "Is deleted. Returns true if the question was deleted.",
+            "example": false
+          },
+          "isObsolete": {
+            "type": "boolean",
+            "description": "Is obsolete. Returns true if the question was marked by a moderator as obsolete.",
+            "example": false
+          },
+          "isClosed": {
+            "type": "boolean",
+            "description": "Is closed. Returns true if the question was closed by a moderator.",
+            "example": false
+          },
+          "bounty": {
+            "$ref": "#/components/schemas/BountyResponseModel"
+          },
+          "bodyMarkdown": {
+            "type": "string",
+            "description": "Body markdown. The main content of the question in Markdown format.",
+            "example": "I accidentally committed the wrong files to Git, but didn't push the commit to the server yet."
+          },
+          "mentionedUsers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MentionedUserResponseModel"
+            }
+          },
+          "mentionedUserGroups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MentionedUserGroupResponseModel"
+            }
+          },
+          "userIsFollowing": {
+            "type": "boolean",
+            "description": "User is following. Returns true if the logged-in user followed the question.",
+            "example": false
+          },
+          "userHasUpvoted": {
+            "type": "boolean",
+            "description": "User has upvoted. Returns true if the logged-in user has upvoted the question.",
+            "example": false
+          },
+          "userHasDownvoted": {
+            "type": "boolean",
+            "description": "User has downvoted. Returns true if the logged-in user has downvoted the question.",
+            "example": false
+          },
+          "userHasBookmarked": {
+            "type": "boolean",
+            "description": "User has bookmarked. Returns true if the logged-in user has bookmarked the question.",
+            "example": false
+          }
+        },
+        "additionalProperties": false
+      },
+      "TagSummaryResponseModel": {
+        "title": "Tag summary",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID. The tag's unique identifier.",
+            "format": "int32",
+            "example": 123
+          },
+          "name": {
+            "type": "string",
+            "description": "Name. The tag's name.",
+            "example": "refactoring"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description. The tag's description.",
+            "example": "Content related to refactoring code"
+          },
+          "postCount": {
+            "type": "integer",
+            "description": "PostCount. The number of posts that have this tag.",
+            "format": "int32",
+            "example": 129
+          },
+          "subjectMatterExpertCount": {
+            "type": "integer",
+            "description": "Subject Matter Expert Count. The total number of individual users who are SMEs for this tag.  This includes individual SMEs assigned, plus the members of any SME groups.  If null, SMEs are not enabled",
+            "format": "int32",
+            "nullable": true,
+            "example": 10
+          },
+          "watcherCount": {
+            "type": "integer",
+            "description": "WatcherCount. The number of users watching this tag.",
+            "format": "int32",
+            "example": 141
+          },
+          "creationDate": {
+            "type": "string",
+            "description": "CreationDate. The date and time the tag was created.",
+            "format": "date-time",
+            "example": "1955-11-12T22:04:00.0"
+          },
+          "hasSynonyms": {
+            "type": "boolean",
+            "description": "HasSynonyms. Returns true if the tag has synonym(s)."
+          },
+          "webUrl": {
+            "type": "string",
+            "description": "WebUrl. The web URL of the tag."
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserDetailsResponseModel": {
+        "title": "User details",
+        "type": "object",
+        "properties": {
+          "upVoteCount": {
+            "type": "integer",
+            "description": "Up vote count. The number of up votes cast by the user.",
+            "format": "int32",
+            "example": 10
+          },
+          "downVoteCount": {
+            "type": "integer",
+            "description": "Down vote count. The number of down votes cast by the user.",
+            "format": "int32",
+            "example": 2
+          },
+          "questionCount": {
+            "type": "integer",
+            "description": "Question count. The number of questions posted by the user.",
+            "format": "int32",
+            "example": 3
+          },
+          "answerCount": {
+            "type": "integer",
+            "description": "Answer count. The number of answers posted by the user.",
+            "format": "int32",
+            "example": 7
+          },
+          "badgeCounts": {
+            "$ref": "#/components/schemas/BadgeCountsResponseModel"
+          },
+          "communities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CommunitySummaryResponseModel"
+            },
+            "description": "Communities. Communities the user is a member of."
+          },
+          "externalId": {
+            "type": "string",
+            "description": "External ID. The unique external ID for the user that can be set via SCIM or SAML.",
+            "nullable": true,
+            "example": "12345"
+          },
+          "department": {
+            "type": "string",
+            "description": "Department. The user's organizational department that can be set via SAML.",
+            "nullable": true,
+            "example": "Engineering"
+          },
+          "jobTitle": {
+            "type": "string",
+            "description": "Job Title. The user's organizational job title that can be set via SAML.",
+            "nullable": true,
+            "example": "Software Developer"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email address. Only visible to admins, or for the current user.",
+            "nullable": true,
+            "example": "user@example.com"
+          },
+          "id": {
+            "type": "integer",
+            "description": "ID. The user's unique identifier on this site.",
+            "format": "int32",
+            "example": 123
+          },
+          "accountId": {
+            "type": "integer",
+            "description": "Account ID. The user's unique account identifier across all Stack Overflow sites.",
+            "format": "int32",
+            "nullable": true,
+            "example": 146
+          },
+          "name": {
+            "type": "string",
+            "description": "Name. The user's name.",
+            "example": "Stack User"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "description": "Avatar URL. The URL to the user's avatar (profile picture).",
+            "example": "https://stackoverflow.design/assets/img/logos/se/se-icon.png"
+          },
+          "webUrl": {
+            "type": "string",
+            "description": "URL. The URL to the user's profile.",
+            "example": "https://stackoverflow.com/users/31280"
+          },
+          "reputation": {
+            "type": "integer",
+            "description": "Reputation. The user's numerical reputation.",
+            "format": "int32",
+            "example": 101
+          },
+          "role": {
+            "type": "string",
+            "description": "Role. The user's role on the site.",
+            "example": "Registered"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserGroupResponseModel": {
+        "title": "User Group",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID. The user group's unique identifier.",
+            "format": "int32",
+            "example": 123
+          },
+          "name": {
+            "type": "string",
+            "description": "Name. The user group's name.",
+            "example": "Knowledgable Group"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description. The user group's description.",
+            "example": "A group of our most knowledgable users"
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserSummaryResponseModel"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserSummaryResponseModel": {
+        "title": "User summary",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID. The user's unique identifier on this site.",
+            "format": "int32",
+            "example": 123
+          },
+          "accountId": {
+            "type": "integer",
+            "description": "Account ID. The user's unique account identifier across all Stack Overflow sites.",
+            "format": "int32",
+            "nullable": true,
+            "example": 146
+          },
+          "name": {
+            "type": "string",
+            "description": "Name. The user's name.",
+            "example": "Stack User"
+          },
+          "avatarUrl": {
+            "type": "string",
+            "description": "Avatar URL. The URL to the user's avatar (profile picture).",
+            "example": "https://stackoverflow.design/assets/img/logos/se/se-icon.png"
+          },
+          "webUrl": {
+            "type": "string",
+            "description": "URL. The URL to the user's profile.",
+            "example": "https://stackoverflow.com/users/31280"
+          },
+          "reputation": {
+            "type": "integer",
+            "description": "Reputation. The user's numerical reputation.",
+            "format": "int32",
+            "example": 101
+          },
+          "role": {
+            "type": "string",
+            "description": "Role. The user's role on the site.",
+            "example": "Registered"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "oauth2": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://stackinternal.stackenterprise.co/oauth",
+            "tokenUrl": "https://stackinternal.stackenterprise.co/oauth/access_token/json",
+            "scopes": {
+              "write_access": "Allow write access",
+              "private_info": "Access private actions and information",
+              "manage_users": "Manage other users where administrator permissions allow",
+              "content_import": "Import content with an existing user as its visible author",
+              "access_team": "Access a team"
+            }
+          }
+        }
+      }
+    }
+  }
+}
