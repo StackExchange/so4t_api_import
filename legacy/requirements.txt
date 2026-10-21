@@ -1,6 +1,7 @@
 -i https://pypi.org/simple
-certifi==2026.2.25 ; python_version >= '3.6'
-charset-normalizer==3.4.7 ; python_full_version >= '3.7.0'
-idna==3.11 ; python_version >= '3.5'
-requests==2.32.5
-urllib3==2.6.3 ; python_version >= '3.7'
+# Requires Python 3.10 or newer (requests and urllib3).
+certifi==2026.10.19
+charset-normalizer==3.4.7
+idna==3.15
+requests==2.33.0
+urllib3==2.8.0
